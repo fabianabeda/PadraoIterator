@@ -1,4 +1,6 @@
 import grafo.dirigido.Aresta;
+import grafo.dirigido.BFSIterator;
+import grafo.dirigido.DFSIterator;
 import grafo.dirigido.Grafo;
 import grafo.dirigido.Vertice;
 import model.Aluno;
@@ -56,9 +58,7 @@ public class MainGrafo2 {
 		}
 
 		else if (Teste == 3) {
-			// Testando o Generics com String. Testando o subgrafo
 			Grafo<String> g = new Grafo<String>();
-			Grafo<String> sub = null;
 
 			g.addVertice("alex");
 			g.addVertice("Nathan");
@@ -68,18 +68,22 @@ public class MainGrafo2 {
 			g.addAresta("alex", "dan", 1);
 			g.addAresta("dan", "duda", 1);
 
-			g.addVertice("alice");
-			g.addVertice("alessandra");
-			g.addAresta("alice", "alessandra", 1);
+			System.out.println("Grafo:");
+			System.out.println(g);
 
-			System.out.println("Percurso em BFS:");
-			for (Vertice<String> v : g) {
-				System.out.println(v.getCarga());
+			System.out.println("Iteração BFS:");
+			BFSIterator<String> bfsIterator = new BFSIterator<String>(g);
+			while (bfsIterator.hasNext()) {
+				Vertice<String> v = bfsIterator.next();
+				System.out.println(v);
 			}
 
-			g.clear();
-			System.out.println("Grafo foi esvaziado: " + g);
+			System.out.println("Iteração DFS:");
+			DFSIterator<String> dfsIterator = new DFSIterator<String>(g);
+			while (dfsIterator.hasNext()) {
+				Vertice<String> v = dfsIterator.next();
+				System.out.println(v);
+			}
 		}
 	}
-
 }
