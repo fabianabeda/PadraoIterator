@@ -1,16 +1,15 @@
 package grafo.dirigido;
 
-import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-import java.util.Queue;
+import java.util.Stack;
 
 public class DFSIterator<T> implements Iterator<Vertice<T>> {
-    private final Queue<Vertice<T>> queue = new ArrayDeque<>();
+    private final Stack<Vertice<T>> stack = new Stack<>();
 
     public DFSIterator(Grafo<T> grafo) {
         Vertice<T> vertice = grafo.getVertices().get(0);
-        queue.offer(vertice);
+        stack.push(vertice);
         vertice.setStatus(VertexState.Visited);
     }
 
@@ -19,13 +18,13 @@ public class DFSIterator<T> implements Iterator<Vertice<T>> {
         if (!hasNext()) {
             throw new NoSuchElementException();
         }
-        Vertice<T> vertice = queue.poll();
+        Vertice<T> vertice = stack.pop();
         for (int i = vertice.getAdj().size() - 1; i >= 0; i--) {
             Aresta<T> arco = vertice.getAdj().get(i);
             Vertice<T> v = arco.getDestino();
             if (v.getStatus() == VertexState.Unvisited) {
                 v.setStatus(VertexState.Visited);
-                queue.offer(v);
+                stack.push(v);
             }
         }
         return vertice;
@@ -38,6 +37,6 @@ public class DFSIterator<T> implements Iterator<Vertice<T>> {
 
     @Override
     public boolean hasNext() {
-        return !queue.isEmpty();
+        return !stack.isEmpty();
     }
 }

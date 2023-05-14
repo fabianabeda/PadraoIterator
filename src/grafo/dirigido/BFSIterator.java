@@ -1,17 +1,20 @@
 package grafo.dirigido;
 
-import java.util.ArrayDeque;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Queue;
+import java.util.LinkedList;
 
 public class BFSIterator<T> implements Iterator<Vertice<T>> {
-    private final Queue<Vertice<T>> queue = new ArrayDeque<>();
+    private final Queue<Vertice<T>> queue = new LinkedList<>();
 
     public BFSIterator(Grafo<T> grafo) {
-        Vertice<T> vertice = grafo.getVertices().get(0);
-        queue.offer(vertice);
-        vertice.setStatus(VertexState.Visited);
+        for (Vertice<T> vertice : grafo.getVertices()) {
+            vertice.setStatus(VertexState.Unvisited);
+        }
+        Vertice<T> start = grafo.getVertices().get(0);
+        queue.offer(start);
+        start.setStatus(VertexState.Visited);
     }
 
     @Override
